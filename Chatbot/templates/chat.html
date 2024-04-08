@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link id="link" rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script type="text/javascript">
+        window._json = '{{ chat | tojson | safe }}'
+    </script>
+</head>
+<body>
+
+<div class="hero-body">
+    <div class="container">
+        <div id="mockChat"></div>
+        <div id="viewport"></div>
+
+     </div>
+    <button type="button" id="button">New conversation</button>
+    <button type="button" id="listen-button"><i class="fa fa-headphones"></i> Listen for message</button>
+</div>
+
+<script>
+
+function listen() {
+    var recognition = new webkitSpeechRecognition();
+    recognition.onresult = function(event) {
+        var message = event.results[0][0].transcript;
+        document.getElementById("mockChat").innerText = message;
+    };
+    recognition.start();
+}
+
+document.getElementById("listen-button").addEventListener("click", function() {
+    listen();
+});
+</script>
+</body>
+</html>
